@@ -7,6 +7,9 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
 polka() // You can also use Express
+	.get('/ping', (req, res) => {
+		res.end('pong');
+	})
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),

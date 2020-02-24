@@ -1,51 +1,57 @@
 <script>
-  import McMenu from "../components/McMenu.svelte";
+	import { onMount } from 'svelte';
+
+	let canvas;
+
+	onMount(async () => {
+		const Phaser = await import('phaser');
+		const { flockingScene } = await import('../components');
+
+		const config = {
+			canvas,
+			scene: flockingScene,
+			type: Phaser.WEBGL,
+			width: window.innerWidth,
+			height: window.innerHeight,
+			transparent: true,
+		};
+
+		const phaserApp = new Phaser.Game(config);
+	});
 </script>
 
 <style>
-  img {
-    position: relative;
-    padding-bottom: 100px;
-  }
+	.canvasContainer {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		height: 100%;
+		position: relative;
+	}
 
-  .body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
+	canvas {
+		position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    z-index: -1;
+	}
 
-  .menu {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    align-items: center;
-  }
+	.hello {
+		margin-top: calc(100vh - 600px - 54px);
+		height: 100vh;
+	}
 </style>
 
 <svelte:head>
-  <title>Hi there</title>
+	<title>Hi there</title>
 </svelte:head>
 
-<div class="body">
-  <!-- <video width="100%" autoplay loop>
-    <source src="/vid.webm" type="video/webm">
-    Your browser does not support the video tag.
-  </video> -->
-
-  <img src="/logo.png" alt="minecraft logo" />
-
-  <div class="menu">
-    <McMenu
-      version="vertical"
-      buttons={[{ label: 'Singleplayer', onClick: () => console.log('Singleplayer') }, { label: 'Boids', link: '/boids' }, {label:'About', link: '/about'}]} />
-
-    <McMenu
-      version="horizontal"
-      buttons={[{ label: 'Options', link: '/options' }, { label: 'Quit Game', onClick: () => alert('¯\\_(ツ)_/¯') }]} />
-  </div>
-
+<h1>Welcome</h1>
+<div class="canvasContainer">
+	<canvas bind:this={canvas} />
+</div>
+<div class="hello">
+	<h1>Hello</h1>
 </div>
