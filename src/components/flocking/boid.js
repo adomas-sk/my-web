@@ -1,33 +1,8 @@
 import * as Phaser from 'phaser';
 
+import {divideByScalar, multiplyByScalar, setMagnitute, limit} from '../vector.utils';
+
 const { Vector2 } = Phaser.Math;
-
-const divideByScalar = (vector, scalar) => {
-	vector.set(vector.x / scalar, vector.y / scalar);
-	return vector;
-};
-
-const multiplyByScalar = (vector, scalar) => {
-	vector.set(vector.x * scalar, vector.y * scalar);
-	return vector;
-};
-
-const setMagnitute = (vector, magnitute) => {
-	return multiplyByScalar(vector.normalize(), magnitute);
-};
-
-const limit = (vector, max) => {
-	const { x, y } = vector;
-	const magnituteSquare = Math.sqrt(x * x + y * y);
-
-	if (magnituteSquare > max * max) {
-		return multiplyByScalar(
-			divideByScalar(vector, Math.sqrt(magnituteSquare)),
-			max
-		);
-	}
-	return vector;
-};
 
 const MAX_FORCE = 0.01;
 const MAX_SPEED = 8;

@@ -1,37 +1,36 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
 	import Navigation from '../components/Navigation';
 
 	let canvas;
 
-	let flocking;
+	let zombies;
 	onMount(async () => {
 		const Phaser = await import('phaser');
-		const { flockingScene } = await import('../components');
+		const { zombiesScene } = await import('../components');
 
 		const config = {
 			canvas,
-			scene: flockingScene(),
+			scene: zombiesScene(),
 			type: Phaser.WEBGL,
 			width: window.innerWidth,
 			height: window.innerHeight,
 			transparent: true,
 		};
 
-		flocking = new Phaser.Game(config);
+        zombies = new Phaser.Game(config);
 	});
 
 	onDestroy(() => {
-		if (flocking.destroy) {
-			flocking.destroy();
+		if (zombies.destroy) {
+			zombies.destroy();
 		}
-
 	});
 </script>
 
 <style>
-	.canvasContainer {
+    .canvasContainer {
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
@@ -47,27 +46,14 @@
 		top: 0;
 		z-index: -1;
 	}
-
-	.card {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 8px;
-		border-radius: 4px;
-		background-color: rgba(0,0,0,0.1);
-	}
 </style>
 
 <svelte:head>
-	<title>Hi there</title>
+	<title>Zombies</title>
 </svelte:head>
 
-<div class="card">
-	<h1>Welcome</h1>
-
-	<Navigation />
-</div>
+<h1>Zombies</h1>
+<Navigation />
 
 <div class="canvasContainer">
 	<canvas bind:this={canvas} />

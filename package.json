@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.8.4",
     "compression": "^1.7.1",
+    "npm": "^6.14.3",
     "phaser": "^3.22.0",
     "polka": "next",
     "sirv": "^0.4.0"
