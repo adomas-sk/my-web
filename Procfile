@@ -1,1 +1,1 @@
-web: npm run build && node ./__sapper__/index.js
+web: node ./__sapper__/index.js

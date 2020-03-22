@@ -15,6 +15,6 @@ polka() // You can also use Express
 		sirv('static', { dev }),
 		sapper.middleware()
 	)
-	.listen(PORT, err => {
+	.listen(PORT || 80, err => {
 		if (err) console.log('error', err);
 	});
