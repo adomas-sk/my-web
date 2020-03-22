@@ -46,14 +46,15 @@
 		top: 0;
 		z-index: -1;
 	}
+
+	
 </style>
 
 <svelte:head>
 	<title>Zombies</title>
 </svelte:head>
 
-<h1>Zombies</h1>
-<Navigation />
+<Navigation unselectable top title="Zombies" />
 
 <div class="canvasContainer">
 	<canvas bind:this={canvas} />

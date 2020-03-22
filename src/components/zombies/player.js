@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 
 import Bullet from './bullet';
+import { multiplyByScalar } from '../vector.utils';
 
 const { Vector2 } = Phaser.Math;
 
@@ -14,18 +15,23 @@ const rightLetter = Phaser.Input.Keyboard.KeyCodes.D;
 const rightArrow = Phaser.Input.Keyboard.KeyCodes.RIGHT;
 
 const MOVEMENT_SPEED = 3;
-const PLAYER_SIZE = 50;
-class Player {
-    constructor (x, y, graphics) {
+const MAX_HEALTH = 20;
+const KNOCKBACK_DISTANCE = 20;
+class Player extends Phaser.GameObjects.Sprite {
+    constructor (scene, x, y, texture, graphics) {
+        super(scene, x, y, texture);
         this.position = new Vector2(x, y);
         this.graphics = graphics;
-        this.input = graphics.scene.input;
+
+        this.health = MAX_HEALTH;
 
         this.bullets = [];
         this.justShooting = false;
 
         // adding movement keys
-        const keyboardInput = {
+        this.input = graphics.scene.input;
+        this.input.setPollAlways();
+        this.keyboardInput = {
             upLetter: this.input.keyboard.addKey(upLetter),
             upArrow: this.input.keyboard.addKey(upArrow),
             downLetter: this.input.keyboard.addKey(downLetter),
@@ -35,12 +41,24 @@ class Player {
             rightLetter: this.input.keyboard.addKey(rightLetter),
             rightArrow: this.input.keyboard.addKey(rightArrow),
         }
-        this.keyboardInput = keyboardInput;
     }
 
     render = () => {
-        this.graphics.fillStyle(0x27753c, 1.0);
-        this.graphics.fillRect(this.position.x, this.position.y, PLAYER_SIZE, PLAYER_SIZE);
+        this.x = this.position.x;
+        this.y = this.position.y;
+
+        const mousePosition = this.input.mousePointer.position;
+        const direction = mousePosition.clone().subtract(this.position).normalize();
+        this.rotation = direction.angle() + Phaser.Math.DegToRad(90);
+
+        this.showHealth();
+    }
+
+    showHealth = () => {
+        this.graphics.fillStyle(0x65d100, 1.0);
+        this.graphics.lineStyle(2, 0x000000, 1.0);
+        const HEALTH_BAR_HEIGHT = 10;
+        this.graphics.fillRect(this.position.x - this.width / 2, this.position.y - this.height / 2 - HEALTH_BAR_HEIGHT, this.health / MAX_HEALTH * this.width, HEALTH_BAR_HEIGHT);
     }
 
     move = () => {
@@ -70,9 +88,7 @@ class Player {
         const mouseDown = this.input.mousePointer.isDown;
         if (mouseDown && !this.shooting) {
             const mousePosition = this.input.mousePointer.position;
-
-            const direction = mousePosition.clone().subtract(this.position).normalize();
-            const bullet = new Bullet(this.position.x + PLAYER_SIZE/2, this.position.y + PLAYER_SIZE/2, direction, this.graphics);
+            const bullet = new Bullet(this.position.x, this.position.y, mousePosition, this.graphics);
 
             this.bullets.push(bullet);
             this.shooting = true;
@@ -84,7 +100,6 @@ class Player {
     run = () => {
         this.move();
         this.shoot();
-        this.render();
         this.bullets = this.bullets.reduce((newBullets, bullet) => {
             if (!bullet.active) {
                 return newBullets;
@@ -93,7 +108,14 @@ class Player {
             newBullets.push(bullet);
             return newBullets;
         }, []);
-        
+        this.render();
+    }
+
+    hit = (zombie) => {
+        const oppositeDirection = this.position.clone().subtract(zombie.position).normalize();
+        const knockbackVelocity = multiplyByScalar(oppositeDirection, KNOCKBACK_DISTANCE);
+        this.position.add(knockbackVelocity);
+        this.health -= 1;
     }
 }
 

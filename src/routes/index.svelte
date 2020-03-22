@@ -47,27 +47,13 @@
 		top: 0;
 		z-index: -1;
 	}
-
-	.card {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 8px;
-		border-radius: 4px;
-		background-color: rgba(0,0,0,0.1);
-	}
 </style>
 
 <svelte:head>
 	<title>Hi there</title>
 </svelte:head>
 
-<div class="card">
-	<h1>Welcome</h1>
-
-	<Navigation />
-</div>
+<Navigation title="Welcome" />
 
 <div class="canvasContainer">
 	<canvas bind:this={canvas} />

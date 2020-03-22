@@ -9,7 +9,6 @@ const getScene = () => {
 	scene.preload = function() {
 		graphics = scene.add.graphics({
 			lineStyle: { width: 2, color: 0xff0000 },
-			// fillStyle: { color: 0x5b3cc9 },
 			fillStyle: { color: 0x5555ff },
 		});
 	};

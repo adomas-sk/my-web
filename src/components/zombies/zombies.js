@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 
 import Arena from './arena';
+import Player from './player';
 
 export default () => {
     const scene = new Phaser.Scene('zombies');
@@ -12,17 +13,19 @@ export default () => {
             lineStyle: { width: 2, color: 0xff0000 },
             fillStyle: { color: 0x5555ff },
         });
-        arena = new Arena(graphics);
+        this.load.image('shooter', '/sprites/shooter.png');
+        this.load.image('zombie', '/sprites/zombie.png');
     }
     
     scene.create = function() {
+        const player = new Player(scene, scene.game.canvas.width / 2, scene.game.canvas.height / 2, 'shooter', graphics);
+        this.add.existing(player);
+        arena = new Arena(scene, player, graphics);
     }
     
-    scene.update = function() {
+    scene.update = function(time, delta) {
         graphics.clear();
-        arena.run();
+        arena.run(time, delta);
     }
     return scene
 }
-
-// export default scene;

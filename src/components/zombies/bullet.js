@@ -7,10 +7,10 @@ const { Vector2 } = Phaser.Math;
 const BULLET_SPEED = 10;
 const BULLET_SIZE = 5
 class Bullet {
-    // Direction should be a normalized vector
-    constructor(x, y, direction, graphics) {
+    constructor(x, y, target, graphics) {
         this.position = new Vector2(x, y);
-        this.direction = multiplyByScalar(direction, BULLET_SPEED);
+        this.target = target;
+        this.direction = multiplyByScalar(target.clone().subtract(this.position).normalize(), BULLET_SPEED);
         this.graphics = graphics;
         this.active = true;
     }

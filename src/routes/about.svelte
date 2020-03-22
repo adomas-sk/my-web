@@ -6,6 +6,10 @@
 	<title>About</title>
 </svelte:head>
 
-<h1>About</h1>
+<Navigation title="About" />
 
-<Navigation />
+<h2>I'm a developer.</h2>
+<p>Here's my github</p>
+<p>
+    <a target="_blank" href="https://github.com/SnakesCantWearHats">https://github.com/SnakesCantWearHats</a>
+</p>
