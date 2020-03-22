@@ -16,6 +16,10 @@
 			label: 'Zombies',
 			link: '/zombies',
 		},
+		{
+			label: 'ARPG',
+			link: '/arpg',
+		}
 	];
 </script>
 

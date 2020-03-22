@@ -13,8 +13,8 @@ export default () => {
             lineStyle: { width: 2, color: 0xff0000 },
             fillStyle: { color: 0x5555ff },
         });
-        this.load.image('shooter', '/sprites/shooter.png');
-        this.load.image('zombie', '/sprites/zombie.png');
+        this.load.image('shooter', '/sprites/zombies/shooter.png');
+        this.load.image('zombie', '/sprites/zombies/zombie.png');
     }
     
     scene.create = function() {
