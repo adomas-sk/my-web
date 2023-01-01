@@ -15,18 +15,18 @@
     "@babel/preset-env": "^7.8.4",
     "compression": "^1.7.1",
     "npm": "^6.14.3",
-    "phaser": "^3.22.0",
+    "phaser": "^3.55.2",
     "polka": "next",
     "sirv": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.3.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "npm-run-all": "^4.1.5",
     "sapper": "^0.27.0",
     "svelte": "^3.0.0",
-    "svelte-loader": "^2.9.0",
-    "webpack": "^4.7.0"
+    "svelte-loader": "^3.1.4",
+    "webpack": "^5.75.0"
   }
 }
